@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message Encryption</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Message Encryption</h1>
+
+        <!-- Form to input message and submit for encryption -->
+        <form action="/encrypt" method="POST">
+            <label for="message">Enter a message to encrypt:</label><br>
+            <input type="text" id="message" name="message" required><br><br>
+            <button type="submit">Encrypt</button>
+        </form>
+
+        <!-- Display the stored messages -->
+        <h1 >Stored Messages</h1>
+        <div class="table-container">
+            <table>
+                <colgroup>
+                    <col style="width: 10%;"> <!-- ID column smaller -->
+                    <col style="width: 90%;"> <!-- Encrypted Message column wider -->
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Encrypted Message</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for message in messages %}
+                    <tr>
+                        <td>{{ message[0] }}</td>
+                        <td>{{ message[2] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- New section to manually input an encrypted message for decryption -->
+        <h1>Decrypt an Encrypted Message</h1>
+        <form action="/manual_decrypt" method="POST">
+            <label for="manual_encrypted_message">Enter an encrypted message:</label><br>
+            <input type="text" id="manual_encrypted_message" name="manual_encrypted_message" required><br><br>
+            <button type="submit">Decrypt</button>
+        </form>
+        
+        {% if manual_decrypted_message %}
+            <h3>Decrypted Message: {{ manual_decrypted_message }}</h3>
+        {% endif %}
+    </div>
+</body>
+</html>
